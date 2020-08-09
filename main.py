@@ -1,6 +1,10 @@
 from yandex_music.client import Client
 import config
+import logging
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
+logger = logging.getLogger()
+logger.setLevel(logging.ERROR)
 #client = Client.from_credentials('example@yandex.com', 'password')
 
 class downloader:
