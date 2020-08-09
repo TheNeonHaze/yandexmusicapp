@@ -21,5 +21,5 @@ class downloader:
 
         return tracks
 
-bot = downloader(config.name, config.password)
+bot = downloader(config.login, config.password)
 bot.tracks_parse()
