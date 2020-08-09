@@ -14,7 +14,14 @@ class Downloader:
     def tracks_parse(self):
         likes_tracks = [f"{track.id}:{track.album_id}" for track in
                         self.client.users_likes_tracks().tracks]
-        tracks = [track.title + " " + track.artists[0]['name'] for track in self.client.tracks(likes_tracks)]
+        tracks = []
+        for track in self.client.tracks(likes_tracks):
+            full_name = track.title
+            try:
+                full_name += " - " + track.artists[0]['name']
+            except IndexError:
+                full_name += " - Какашка"
+            tracks.append(full_name)
         return tracks
 
     def download_track(self, track_id, album_id):
