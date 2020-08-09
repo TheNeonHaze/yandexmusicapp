@@ -1,16 +1,15 @@
 from yandex_music.client import Client
 import config
 import logging
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger()
 logger.setLevel(logging.ERROR)
-#client = Client.from_credentials('example@yandex.com', 'password')
 
-class downloader:
+
+class Downloader:
     def __init__(self, login, password):
         self.client = Client.from_credentials(login, password)
-
 
     def tracks_parse(self):
         likes_tracks = [track.id for track in self.client.users_likes_tracks()]
@@ -25,5 +24,11 @@ class downloader:
 
         return tracks
 
-bot = downloader(config.login, config.password)
-bot.tracks_parse()
+    def download_track(self, track_id, album_id):
+        track = self.client.tracks([f'{track_id}:{album_id}'])
+        track = track[0]
+        track.download('test.mp3')
+
+
+bot = Downloader(config.login, config.password)
+bot.download_track(2280249, 965663)
